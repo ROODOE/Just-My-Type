@@ -13,11 +13,12 @@ let errorCount = 0;
 let characterSumCount = 0;
 
                                     //Took majority of sentence content out for quicker testing
+//neite ate nee enet ite ate inet ent eate 
 //ato too nOt enot one totA not anot tOO aNot 
 //oat tain nate eate tea anne inant nean 
 //anot eat nato inate eat anot tain eat 
 // ate ite tent tiet ent ine ene ete ene ate
-let sentenceArray = ['ten ate neite ate nee enet ite ate inet ent eate ', 'Too ', 'oat itain ', 'itant eate ', 'nee ene.'],
+let sentenceArray = ['ten ate ', 'Too ', 'oat itain ', 'itant eate ', 'nee ene '],
 sentenceArrayLength = sentenceArray.length - 1;
 let sentenceArrayIndex = sentenceArray[sentenceCounter];
 
@@ -50,7 +51,7 @@ $(document).keydown(function(e) {
 $(document).keypress(function(e) {
     
     let whichKey = $('#' + e.which);
-    whichKey.css('backgroundColor', 'yellow');
+    whichKey.css('backgroundColor', 'rgb(173, 123, 231)');
     
                                         //Un-highlight background when a key is released
     $(document).keyup(function(e) {
@@ -87,18 +88,19 @@ $(document).keypress(function(e) {
         characterCounter += 1;
         characterIndexNum = sentenceArrayIndex.charCodeAt(characterCounter);
         characterIndexLetter = sentenceArrayIndex[characterCounter];
-                                        //Display next target letter in the current sentence
+        //Display next target letter in the current sentence
         targetLetter.html(characterIndexLetter);
-                                        //Just logging some stuff
+        //Just logging some stuff
         console.log(characterIndexNum);
         console.log(characterIndexLetter);
-                                        //Checking if current sentence is completed, and if so, starting second sentence.
+        console.log(characterSumCount);
+        //Checking if current sentence is completed, and if so, starting second sentence.
         if(characterCounter === sentenceArrayIndex.length) {
-                                        //Clear feedback and reset highlighter
+            //Clear feedback and reset highlighter
             feedback.empty();
             
             yellowBlock.css({left: ''}, 0);
-
+            
             characterCounter = 0;
             sentenceCounter++;
             sentenceArrayIndex = sentenceArray[sentenceCounter];
@@ -108,8 +110,9 @@ $(document).keypress(function(e) {
             characterIndexLetter = sentenceArrayIndex[characterCounter];
             targetLetter.html(characterIndexLetter);
             console.log(sentenceArrayIndex.length);
-            console.log(sentenceArrayLength);   
-         
+            console.log(sentenceArrayLength);  
+            
+            // sentenceArrayIndex.length - 1
         } else if(sentenceArrayLength === 8 && characterCounter === sentenceArrayIndex.length - 1) {
             gameOver();
         }
@@ -125,18 +128,19 @@ $(document).keypress(function(e) {
     
                                             //Record time and WPM and ask for restart
     function gameOver() {
-        let elapsedTime = new Date() - start;
+        let elapsedTime = new Date() - startNewTimer;
         console.log(elapsedTime)
         let howLongYouTyped = elapsedTime / 60000;
         console.log(howLongYouTyped)
         let inMinutes = Math.floor(howLongYouTyped);
         console.log(inMinutes);
-        let wpm = characterSumCount / 5 / howLongYouTyped;
+        let wpm = Math.round(characterSumCount / 5 / howLongYouTyped);
         console.log(wpm);
-        let tryAgain = confirm("You type" + wpm + " words per minute. You made " + errorCount + " mistakes. Would you ike to try again?");
-        if(tryAgain == true) {
-            location.reload();
-        }
+        let tryAgain = promptContainer.text("You type " + wpm + " words per minute. You made " + errorCount + " mistakes. Would you ike to try again? If YES, press F5. If NO, then GET OUTTA HEREE!!");
+        
+        // if(tryAgain == true) {
+        //     location.reload();
+        // }
     };
     console.log(characterCounter);
     console.log(sentenceArrayIndex.length);
