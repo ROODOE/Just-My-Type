@@ -26,11 +26,16 @@
 
 .keyboard-container {
   margin-top: 150px;
+  font-family: cursive;
+  color: white;
+}
+
+.key {
+  background-color: rgb(46, 43, 43);
 }
 
 #keyboard-upper-container {
   margin-top: 20px;
-  
 }
 
 #target-letter {
